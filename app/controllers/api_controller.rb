@@ -1,17 +1,12 @@
-class ApplicationController < ActionController::Base
+class ApiController < ActionController::Base
   include Sorcery::Controller
   include ActionController::Serialization
-  include ActionController::Cookies
-
-
-  before_filter :set_locale
 
   DEFAULT_LOCALE = 'en'
 
   def default_serializer_options
     {root: false}
   end
-
 
   def current_user
     @current_user ||= user_from_token
@@ -29,24 +24,6 @@ class ApplicationController < ActionController::Base
     current_user.present?
   end
 
-  def only_admin
-    if logged_in? && current_user.admin?
-      true
-    else
-      render text: '', status: 401
-      false
-    end
-  end
-
-  def support_or_admin
-    if logged_in? && (current_user.admin? || current_user.support?)
-      true
-    else
-      render text: '', status: 401
-      false
-    end
-  end
-
   def user_from_token
     begin
       session = AuthToken.valid?(token)
@@ -61,28 +38,7 @@ class ApplicationController < ActionController::Base
     request.headers['Token']
   end
 
-
   private
 
-
-  def set_locale
-    if logged_in? && current_user.locale.present?
-      params[:locale] = current_user.locale
-    else
-      params[:locale] = language_header
-    end
-
-    I18n.locale = locale_exist?(params[:locale]) ? params[:locale] : DEFAULT_LOCALE
-  end
-
-  def locale_exist?(locale)
-    %w(ru en).include?(locale)
-  end
-
-  def language_header
-    if request.env['HTTP_ACCEPT_LANGUAGE'].present?
-      request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
-    end
-  end
 
 end
