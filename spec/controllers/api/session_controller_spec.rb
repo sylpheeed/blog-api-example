@@ -6,11 +6,16 @@ RSpec.describe Api::SessionController, :type => :controller do
   end
 
   def user
-    @user ||= FactoryGirl.create(:user)
+    @user ||= FactoryGirl.create(:user, user_attrs)
   end
 
   def token
     @token ||= AuthToken.generate({id: user.id})
+  end
+
+
+  before :each do
+    user
   end
 
   describe "GET /api/session" do

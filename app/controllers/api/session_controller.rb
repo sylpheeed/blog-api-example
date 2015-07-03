@@ -11,7 +11,6 @@ class Api::SessionController < ApiController
   def create
     params = user_params
     user = User.authenticate(params[:email], params[:password])
-    logger.warn user_params
     if user
       render json: {
                  token: AuthToken.generate({id: user.id}),
