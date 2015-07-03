@@ -14,40 +14,42 @@ RSpec.describe Api::SessionController, :type => :controller do
   end
 
 
-  before :each do
-    user
-  end
-
-  describe "GET /api/session" do
-    it 'responds successful and includes status true and user information' do
-      request.headers['Token'] = token
-      get :index
-      result = JSON.parse response.body
-      expect(response).to have_http_status(200)
-      expect(result['status']).to eq(true)
-      expect(result['user']['id']).to eq(user.id)
+  describe 'api/session_controller' do
+    before :each do
+      user
     end
 
-    it 'respond successful and status false' do
-      get :index
-      result = JSON.parse response.body
-      expect(response).to have_http_status(200)
-      expect(result['status']).to eq(false)
-    end
-  end
+    describe 'GET /api/session' do
+      it 'responds successful and it includes status true and user information' do
+        request.headers['Token'] = token
+        get :index
+        result = JSON.parse response.body
+        expect(response).to have_http_status(200)
+        expect(result['status']).to eq(true)
+        expect(result['user']['id']).to eq(user.id)
+      end
 
-  describe 'POST /session' do
-    it 'respond successful and includes user and token params' do
-      post :create, {user: {email: user_attrs[:email], password: user_attrs[:password]}}
-      result = JSON.parse response.body
-      expect(response).to have_http_status(200)
-      expect(result['token']).to eq(token)
-      expect(result['user']['id']).to eq(user.id)
+      it 'respond successful and status false' do
+        get :index
+        result = JSON.parse response.body
+        expect(response).to have_http_status(200)
+        expect(result['status']).to eq(false)
+      end
     end
 
-    it 'respond with error status 400' do
-      post :create
-      expect(response).to have_http_status(400)
+    describe 'POST /api/session' do
+      it 'respond successful and it includes user and token params' do
+        post :create, {user: {email: user_attrs[:email], password: user_attrs[:password]}}
+        result = JSON.parse response.body
+        expect(response).to have_http_status(200)
+        expect(result['token']).to eq(token)
+        expect(result['user']['id']).to eq(user.id)
+      end
+
+      it 'respond with error status 400' do
+        post :create
+        expect(response).to have_http_status(400)
+      end
     end
   end
 end

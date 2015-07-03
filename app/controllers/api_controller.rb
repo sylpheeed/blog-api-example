@@ -2,15 +2,13 @@ class ApiController < ActionController::Base
   include Sorcery::Controller
   include ActionController::Serialization
 
-  DEFAULT_LOCALE = 'en'
-
   def default_serializer_options
     {root: false}
   end
 
   def current_user
     @current_user ||= user_from_token
-    @current_user.id ? @current_user : false
+    # @current_user.id ? @current_user : false
   end
 
   def authorized!
@@ -29,8 +27,8 @@ class ApiController < ActionController::Base
       session = AuthToken.valid?(token)
       User.find session['id']
     rescue => e
-      logger.warn "AUTH SESSION FAIL: #{e.to_s}"
-      User.new
+      # User.new
+      false
     end
   end
 
