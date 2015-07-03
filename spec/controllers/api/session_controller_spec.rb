@@ -19,7 +19,7 @@ RSpec.describe Api::SessionController, :type => :controller do
   end
 
   describe "GET /api/session" do
-    it 'responds successfully with including status true and user information' do
+    it 'responds successful and includes status true and user information' do
       request.headers['Token'] = token
       get :index
       result = JSON.parse response.body
@@ -28,7 +28,7 @@ RSpec.describe Api::SessionController, :type => :controller do
       expect(result['user']['id']).to eq(user.id)
     end
 
-    it 'responds successfully with status false' do
+    it 'respond successful and status false' do
       get :index
       result = JSON.parse response.body
       expect(response).to have_http_status(200)
@@ -37,7 +37,7 @@ RSpec.describe Api::SessionController, :type => :controller do
   end
 
   describe 'POST /session' do
-    it 'responds successfully with user and token params' do
+    it 'respond successful and includes user and token params' do
       post :create, {user: {email: user_attrs[:email], password: user_attrs[:password]}}
       result = JSON.parse response.body
       expect(response).to have_http_status(200)
@@ -45,7 +45,7 @@ RSpec.describe Api::SessionController, :type => :controller do
       expect(result['user']['id']).to eq(user.id)
     end
 
-    it 'responds with error status 400 and including message' do
+    it 'respond with error status 400' do
       post :create
       expect(response).to have_http_status(400)
     end

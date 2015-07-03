@@ -21,7 +21,7 @@ class Api::SessionController < ApiController
     end
 
   rescue => e
-    render json: {message: I18n.t('login.error.invalid')}, status: 400
+    render json: {message: I18n.t('session.invalid_email_or_password')}, status: 400
   end
 
   private
