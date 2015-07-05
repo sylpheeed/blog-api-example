@@ -64,6 +64,9 @@ GEM
     i18n (0.7.0)
     json (1.8.3)
     jwt (1.4.1)
+    kaminari (0.16.3)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     loofah (2.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -181,6 +184,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   jwt
+  kaminari
   pg
   pry
   rack-cors

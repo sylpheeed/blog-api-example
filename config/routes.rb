@@ -58,7 +58,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :session, only: [:index, :create]
     resources :locale, only: [:index]
-    resources :post, only: [:index, :show, :update, :destroy]
+    resources :post, only: [:index, :show, :create, :update, :destroy]
   end
 
 end
