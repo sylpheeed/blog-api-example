@@ -16,7 +16,7 @@ RSpec.describe Api::RegistrationController, :type => :controller do
     end
 
     it 'respond with status code 400 and it includes message' do
-      post :create
+      post :create, {registration: {email: 'tet', password: '1234'}}
       result = JSON.parse response.body
       expect(response).to have_http_status(400)
       expect(result).not_to be_empty
