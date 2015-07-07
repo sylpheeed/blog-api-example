@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     resources :session, only: [:index, :create]
     resources :locale, only: [:index]
     resources :post, only: [:index, :show, :create, :update, :destroy]
+    resources :registration, only: [:create]
   end
 
 end
